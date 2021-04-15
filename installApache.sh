@@ -9,7 +9,7 @@ installApache(){
 		
 	else 						#si no se instala
 		echo "Installing apache2..."
-		sudo apt install apache2>&/dev/null
+		sudo apt-get --assume-yes install apache2>&/dev/null
 		echo "Installed"
 	fi							#cerrar el if
 }
@@ -36,7 +36,7 @@ installNetstat(){
 		
 	else 						#si no se instala
 		echo "Installing netstat..."
-		sudo apt install net-tools>&/dev/null 
+		sudo apt-get --assume-yes install net-tools>&/dev/null 
 		echo "Installed"
 	fi							#cerrar el if
 }
@@ -79,8 +79,9 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 		
 	else 						#si no se instala
 		echo "Installing php modules..."
-		sudo apt  install php libapache2−mod−php>&/dev/null
-		sudo apt  install php-cli >&/dev/null
+		sudo apt-get --assume-yes install php libapache2−mod−php>&/dev/null
+		sudo apt-get --assume-yes install php-cli >&/dev/null
+		sudo apt-get --assume-yes install php7.4-cli >&/dev/null
 		echo "Restarting apache service..."
 		sudo service apache2 restart
 		sudo systemctl reload apache2
@@ -92,5 +93,8 @@ phpTest(){
 	sudo cp test.php /var/www/laguntest/public_php
 	firefox http://localhost:8888/test.php
 }
+phpInstall
+phpTest
+phpTest
 
 phpTest
