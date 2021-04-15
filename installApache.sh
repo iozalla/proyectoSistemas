@@ -88,9 +88,9 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 	fi							#cerrar el if
 
 }
-installApache
-apacheStart
-installNetstat
-apacheTest
-personalIndex
-createVirtualhost
+phpTest(){
+	sudo cp test.php /var/www/laguntest/public_php
+	firefox http://localhost:8888/test.php
+}
+
+phpTest
