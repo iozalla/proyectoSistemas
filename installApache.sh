@@ -83,6 +83,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 		sudo apt  install php-cli >&/dev/null
 		echo "Restarting apache service..."
 		sudo service apache2 restart
+		sudo systemctl reload apache2
 		echo "Installed"
 	fi							#cerrar el if
 
