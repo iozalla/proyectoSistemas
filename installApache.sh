@@ -94,8 +94,8 @@ phpTest(){
 	sudo cp test.php /var/www/laguntest/public_php
 	firefox http://localhost:8888/test.php
 }
+createVirtualhost
 phpInstall
 phpTest
-phpTest
 
-phpTest
+
