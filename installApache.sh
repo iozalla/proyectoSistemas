@@ -107,6 +107,15 @@ instalandoLibreriasPythonLagunTest(){
   grupo=$(id -g)
   chwon $usuario[:$grupo] var/www/laguntest/public_html
 }
+creandoEntornoVirtualPython3(){
+	sudo pip3 install virtualenv
+	cd /var/www/laguntest/public_html/
+	
+	if [ -d ".env" ] ; then echo "Virtual enviroment already created"
+	else
+		sudo virtualenv -p python3 .env
+	fi	
+}
 installApache
 apacheStart
 installNetstat
@@ -116,3 +125,4 @@ createVirtualhost
 phpInstall
 phpTest
 instalandoPaquetesUbuntuLagunTest
+creandoEntornoVirtualPython3
