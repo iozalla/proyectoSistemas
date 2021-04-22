@@ -101,6 +101,12 @@ instalandoPaquetesUbuntuLagunTest(){
 	sudo apt-get --assume-yes install librsvg2-bin
 
 }
+
+instalandoLibreriasPythonLagunTest(){
+  usuario=$(id -s)
+  grupo=$(id -g)
+  chwon $usuario[:$grupo] var/www/laguntest/public_html
+}
 installApache
 apacheStart
 installNetstat
