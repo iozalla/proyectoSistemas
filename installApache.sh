@@ -1,4 +1,4 @@
-#!/bin/bash
+  #!/bin/bash
 
 
 
@@ -94,6 +94,13 @@ phpTest(){
   sudo cp test.php /var/www/laguntest/public_php
   firefox http://localhost:8888/test.php
 }
+instalandoPaquetesUbuntuLagunTest(){
+
+	sudo apt-get --assume-yes install python3-pip
+	sudo apt-get --assume-yes install dos2unix
+	sudo apt-get --assume-yes install librsvg2-bin
+
+}
 installApache
 apacheStart
 installNetstat
@@ -102,3 +109,4 @@ apacheIndex
 createVirtualhost
 phpInstall
 phpTest
+instalandoPaquetesUbuntuLagunTest
