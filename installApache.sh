@@ -60,9 +60,9 @@ personalIndex(){
 
 createVirtualhost(){
   sudo mkdir /var/www/laguntest
-  sudo mkdir /var/www/laguntest/public_php
-  sudo cp index.html /var/www/laguntest/public_php 		#copiamos el index
-  sudo cp -r grupo /var/www/laguntest/public_php		#copiamos la carpeta grupo
+  sudo mkdir /var/www/laguntest/public_html
+  sudo cp index.html /var/www/laguntest/public_html 		#copiamos el index
+  sudo cp -r grupo /var/www/laguntest/public_html		#copiamos la carpeta grupo
 
   echo "ficheros copiados a /var/www/laguntest/public_html"
   echo "creando localhost "
@@ -91,7 +91,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 
 }
 phpTest(){
-  sudo cp test.php /var/www/laguntest/public_php
+  sudo cp test.php /var/www/laguntest/public_html
   firefox http://localhost:8888/test.php
 }
 instalandoPaquetesUbuntuLagunTest(){
@@ -111,20 +111,20 @@ creandoEntornoVirtualPython3(){
 	fi
 }
 instalandoLibreriasPythonLagunTest(){
-  usuario=$(id -s)
+  usuario=$(id -u)
   grupo=$(id -g)
-  chwon $usuario[:$grupo] var/www/laguntest/public_html
-  source virtualenv/bin/activate
+  sudo chown $usuario:$grupo /var/www/laguntest/public_html
+  source /var/www/laguntest/public_html/.env/bin/activate
 }
 
-installApache
-apacheStart
-installNetstat
-personalIndex
-apacheIndex
-createVirtualhost
-phpInstall
-phpTest
-instalandoPaquetesUbuntuLagunTest
+#installApache
+#apacheStart
+#installNetstat
+#personalIndex
+#apacheIndex
+#createVirtualhost
+#phpInstall
+#phpTest
+#instalandoPaquetesUbuntuLagunTest
 creandoEntornoVirtualPython3
 instalandoLibreriasPythonLagunTest
