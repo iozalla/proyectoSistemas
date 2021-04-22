@@ -106,6 +106,7 @@ instalandoLibreriasPythonLagunTest(){
   usuario=$(id -s)
   grupo=$(id -g)
   chwon $usuario[:$grupo] var/www/laguntest/public_html
+  source virtualenv/bin/activate
 }
 installApache
 apacheStart
