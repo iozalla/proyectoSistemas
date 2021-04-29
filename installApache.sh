@@ -117,6 +117,7 @@ instalandoLibreriasPythonLagunTest(){
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
   cp LagunTest-master/requirements.txt /var/www/laguntest/public_html/.env
   pip3 install -r requirements.txt
+  deactivate
 }
 
 instalandoAplicacionLagunTest(){
