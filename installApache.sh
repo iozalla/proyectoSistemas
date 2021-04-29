@@ -145,3 +145,6 @@ viendoLogs(){
 #instalandoPaquetesUbuntuLagunTest
 creandoEntornoVirtualPython3
 instalandoLibreriasPythonLagunTest
+pasoPropiedad
+viendoLogs
+instalandoLibreriasPythonLagunTest
