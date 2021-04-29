@@ -119,6 +119,19 @@ instalandoLibreriasPythonLagunTest(){
 viendoLogs(){
   tail -100 /var/log/apache2/error.log
 }
+conectarssh(){
+  read -p "Introduce <USUARIO>@<IP>" $ssh           #Se solicita la direccion a la que se va a coectar
+  ssh $ssh                                          #Se realiza la conexion
+  tar -czvf laguntest.tar.gz ./proyectoSistemas/    #
+  sudo scp ~/laguntest.tar.gz $ssh:Escritorio
+  ssh tar -zxvf laguntest.tar.gz
+  rm laguntest.tar.gz
+  ssh rm laguntest.tar.gz
+
+  ssh ./proyectoSistemas/.installApache.sh
+
+}
+
 
 #installApache
 #apacheStart
@@ -131,3 +144,4 @@ viendoLogs(){
 #instalandoPaquetesUbuntuLagunTest
 creandoEntornoVirtualPython3
 instalandoLibreriasPythonLagunTest
+viendoLogs
