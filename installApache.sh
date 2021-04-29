@@ -111,11 +111,16 @@ creandoEntornoVirtualPython3(){
 	fi
 }
 instalandoLibreriasPythonLagunTest(){
-  usuario=$(id -u)
-  grupo=$(id -g)
-  sudo chown $usuario:$grupo /var/www/laguntest/public_html
-  source /var/www/laguntest/public_html/.env/bin/activate
+  usuario=$(id -u) #se guarda en una variable el id del usuario actual
+  grupo=$(id -g) #se guarda en una variable el id del grupo actual
+  sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
+  source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
 }
+
+pasoPropiedad(){
+  sudo chown -R www-data:www-data /var/www
+}
+
 viendoLogs(){
   tail -100 /var/log/apache2/error.log
 }
