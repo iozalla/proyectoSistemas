@@ -116,6 +116,9 @@ instalandoLibreriasPythonLagunTest(){
   sudo chown $usuario:$grupo /var/www/laguntest/public_html
   source /var/www/laguntest/public_html/.env/bin/activate
 }
+viendoLogs(){
+  tail -100 /var/log/apache2/error.log
+}
 
 #installApache
 #apacheStart
