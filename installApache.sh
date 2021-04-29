@@ -117,6 +117,11 @@ instalandoLibreriasPythonLagunTest(){
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
 }
 
+instalandoAplicacionLagunTest(){
+	sudo cp -r -a fich/. /var/www/laguntest/public_html 
+	
+}
+
 pasoPropiedad(){
   sudo chown -R www-data:www-data /var/www
 }
