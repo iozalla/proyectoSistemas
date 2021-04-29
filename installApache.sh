@@ -119,10 +119,11 @@ instalandoLibreriasPythonLagunTest(){
   pip3 install -r requirements.txt
   deactivate
 }
-
 instalandoAplicacionLagunTest(){
-	sudo cp -r -a fich/. /var/www/laguntest/public_html
-
+  cp -r textos /var/www/laguntest/public_html/
+  sudo chmod +x webprocess.sh
+  cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
+	
 }
 
 pasoPropiedad(){
