@@ -1,6 +1,6 @@
   #!/bin/bash
 
-
+rutaPrincipal=$( pwd )
 
 installApache(){
   dpkg -s apache2 >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
@@ -113,17 +113,19 @@ creandoEntornoVirtualPython3(){
 instalandoLibreriasPythonLagunTest(){
   usuario=$(id -u) #se guarda en una variable el id del usuario actual
   grupo=$(id -g) #se guarda en una variable el id del grupo actual
+  echo $rutaPrincipal
+  cd $rutaPrincipal
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
-  cp ./requirements.txt /var/www/laguntest/public_html/.env
-  pip3 install -r requirements.txt
+  sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
+  sudo pip3 install -r requirements.txt
   deactivate
 }
 instalandoAplicacionLagunTest(){
   cp -r textos /var/www/laguntest/public_html/
   sudo chmod +x webprocess.sh
   cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
-	
+
 }
 
 pasoPropiedad(){
@@ -147,4 +149,3 @@ creandoEntornoVirtualPython3
 instalandoLibreriasPythonLagunTest
 pasoPropiedad
 viendoLogs
-
