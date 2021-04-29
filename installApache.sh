@@ -115,7 +115,7 @@ instalandoLibreriasPythonLagunTest(){
   grupo=$(id -g) #se guarda en una variable el id del grupo actual
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
-  cp LagunTest-master/requirements.txt /var/www/laguntest/public_html/.env
+  cp ~/Documentos/Github/proyectoSistemas/requirements.txt /var/www/laguntest/public_html/.env
   pip3 install -r requirements.txt
   deactivate
 }
