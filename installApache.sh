@@ -158,6 +158,7 @@ conectarssh(){
 #phpInstall
 #phpTest
 #instalandoPaquetesUbuntuLagunTest
-creandoEntornoVirtualPython3
-instalandoLibreriasPythonLagunTest
-viendoLogs
+#creandoEntornoVirtualPython3
+#instalandoLibreriasPythonLagunTest
+#viendoLogs
+conectarssh()
