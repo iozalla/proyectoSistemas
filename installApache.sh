@@ -3,18 +3,23 @@
 #                  1) INICIALIZACIONES PREVIAS          #
 ###########################################################
 rutaPrincipal=$( pwd )
+RED='\033[0;31m'
+NC='\033[0m' #COLOR ORIGINAL
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36'
 ###########################################################
 #                  1) INSTALL APACHE                     #
 ###########################################################
 apacheInstall(){
   dpkg -s apache2 >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo "apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing apache2..."
     sudo apt-get --assume-yes install apache2>&/dev/null
-    echo "Installed"
+    echo -e "${GREEN}Installed"
   fi							#cerrar el if
 }
 
@@ -27,11 +32,12 @@ apacheInstall(){
 apacheStart(){
   service apache2 status|grep 'Active: active (running)'>&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 							#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo "already started"	#si el codigo es 0 significará que se ha iniciado el apache
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}already started"	#si el codigo es 0 significará que se ha iniciado el apache
 
   else 						#si no, se inicia
-    echo "starting apache"
+    echo -e "${CYAN}starting apache"
     sudo service apache2 start
+    echo -e "${GREEN}ApacheStarted"
 
   fi							#cerrar el if
 }
@@ -43,12 +49,12 @@ apacheStart(){
 installNetstat(){
   dpkg -s net-tools>&/dev/null 	#se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo "netstat already installed "	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed "	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing netstat..."
     sudo apt-get --assume-yes install net-tools>&/dev/null
-    echo "Installed"
+    echo -e "${GREEN}Installed"
   fi							#cerrar el if
 }
 
@@ -73,7 +79,7 @@ apacheIndex(){
 personalIndex(){
   sudo cp index.html /var/www/html/
   sudo cp -r grupo /var/www/html/
-  echo "ficheros copiados a /var/www/html/ "
+  echo -e "${GREEN}ficheros copiados a /var/www/html/ "
   apacheIndex
 }
 ###########################################################
@@ -91,7 +97,7 @@ createVirtualhost(){
   sudo cp grupo.es.conf /etc/apache2/sites-available
   sudo a2ensite grupo.es.conf
   sudo service apache2 restart
-
+  echo -e "${GREEN}LOCALHOST creado "
 }
 ###########################################################
 #                  7) TEST VIRTUALHOST                   #
@@ -106,7 +112,7 @@ virtualhostTest(){
 phpInstall(){
 dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo "apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing php modules..."
@@ -117,7 +123,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
     echo "Restarting apache service..."
     sudo service apache2 restart
     sudo systemctl reload apache2
-    echo "Installed"
+    echo -e "${GREEN}Installed"
   fi							#cerrar el if
 
 }
@@ -135,6 +141,7 @@ instalandoPaquetesUbuntuLagunTest(){
 	sudo apt-get --assume-yes install python3-pip
 	sudo apt-get --assume-yes install dos2unix
 	sudo apt-get --assume-yes install librsvg2-bin
+  echo -e "${GREEN}paquetes instalados"
 }
 
 #################################################################################
@@ -144,7 +151,7 @@ creandoEntornoVirtualPython3(){
 	sudo pip3 install virtualenv
 	cd /var/www/laguntest/public_html/
 
-	if [ -d ".env" ] ; then echo "Virtual enviroment already created"
+	if [ -d ".env" ] ; then echo -e "${GREEN}Virtual enviroment already created"
 	else
 		sudo virtualenv -p python3 .env
 	fi
@@ -162,6 +169,7 @@ instalandoLibreriasPythonLagunTest(){
   sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
   sudo pip3 install -r requirements.txt
   deactivate
+  echo -e "${GREEN}LIBRERIAS instaladas"
 }
 
 ###########################################################
@@ -171,6 +179,7 @@ instalandoAplicacionLagunTest(){
   cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
   sudo chmod +x webprocess.sh
   cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
+  echo -e "${GREEN}Aplicacion instalada"
 
 }
 ###########################################################
@@ -178,6 +187,7 @@ instalandoAplicacionLagunTest(){
 ###########################################################
 pasoPropiedad(){
   sudo chown -R www-data:www-data /var/www
+  echo -e "${GREEN}Hecho"
 }
 
 ###########################################################
@@ -228,9 +238,9 @@ function main(){
   while test $opcionmenuppal -ne 20
   do
   	#Muestra el menu
-          echo""
-          echo " _______________________________ "
-        	echo -e "1) Instala Apache "
+
+          echo -e "_____________________________________________  "
+        	echo -e "${YELLOW}1) Instala Apache "
           echo -e "2) Arrancar el servicio apache "
           echo -e "3) Informacion APACHE    "
           echo -e "4) Visualizar web por defecto     "
@@ -249,10 +259,12 @@ function main(){
           echo -e "17) Ver logs   "
           echo -e "18) Conectar SSH    "
           echo -e "19) No hay 19   "
-  	      echo -e "20) Fin   "
+  	      echo -e "20) Fin   ${NC}"
           read -p "Elige una opcion:" opcionmenuppal
+          echo ""
 
   	case $opcionmenuppal in
+
    			1) apacheInstall;;
         2) apacheStart;;
         3) apacheTest;;
@@ -276,9 +288,11 @@ function main(){
   			*) ;;
 
   	esac
+
   done
 
-  echo "Fin del Programa"
+  echo "トマトとチョリソのマカロニ"
+  echo "Asier Astorquiza, Iñigo Ozalla, Iker bobo, Endika Eiros"
   exit 0
 }
 main
