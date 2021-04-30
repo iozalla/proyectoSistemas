@@ -112,7 +112,7 @@ virtualhostTest(){
 phpInstall(){
 dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}PHP already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing php modules..."
@@ -133,6 +133,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 phpTest(){
   sudo cp test.php /var/www/laguntest/public_html
   firefox http://localhost:8888/test.php
+  echo -e "${GREEN}Tested"
 }
 #################################################################################
 #                       10) INSTALAR PAQUETES LAGUNTEST                         #
@@ -176,9 +177,9 @@ instalandoLibreriasPythonLagunTest(){
 #                  13) INSTALAR LAGUNTEST                 #
 ###########################################################
 instalandoAplicacionLagunTest(){
-  cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
+  sudo cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
   sudo chmod +x webprocess.sh
-  cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
+  sudo cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
   echo -e "${GREEN}Aplicacion instalada"
 
 }
@@ -191,7 +192,22 @@ pasoPropiedad(){
 }
 
 ###########################################################
-#                  16) PASO PROPIEDAD                     #
+#     15) PROBAR QUE FUNCIONE EL WEBPROCESS.SH            #
+###########################################################
+
+
+pruebaWebprocess(){
+  sudo su - www-data -s /bin/bash
+  cd /var/www/laguntest/public_html/
+  ./webprocess.sh
+  echo -e "${GREEN}Webprocess ejecutado"
+  exit
+}
+
+
+
+###########################################################
+#                  16) VISUALIZAR APLICACION                    #
 ###########################################################
 visualizandoAplicacion(){
   echo "falta"
@@ -279,7 +295,7 @@ function main(){
         12) instalandoLibreriasPythonLagunTest;;
         13) instalandoAplicacionLagunTest;;
         14) pasoPropiedad;;
-        15) echo "no hay 15";;
+        15) pruebaWebprocess;;
         16) visualizandoAplicacion;;
         17) viendoLogs;;
         18) echo "no hay 18";;
