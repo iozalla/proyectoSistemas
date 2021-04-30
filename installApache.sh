@@ -184,7 +184,7 @@ pasoPropiedad(){
 #                  16) PASO PROPIEDAD                     #
 ###########################################################
 visualizandoAplicacion(){
-
+  echo "falta"
 }
 
 ###########################################################
@@ -228,29 +228,28 @@ function main(){
   while test $opcionmenuppal -ne 20
   do
   	#Muestra el menu
-        	echo -e "1) Instala Apache \n"
-          echo -e "2) Arrancar el servicio apache \n"
-          echo -e "3) Informacion APACHE    \n"
-          echo -e "4) Visualizar web por defecto     \n"
-          echo -e "5) Personalizar index.html     \n"
-          echo -e "6) Crear VIRTUALHOST     \n"
-          echo -e "7) Test VIRTUALHOST     \n"
-          echo -e "8) Instalar PHP     \n"
-          echo -e "9) ...     \n"
-
-  	      echo -e "20) fin \n"
-          echo -e "9) Test PHP    \n"
-          echo -e "10) Instalar paquetes LAGUNTEST   \n"
-          echo -e "11) Crear entorno virtual Python3   \n"
-          echo -e "12) Instalar librerias Python    \n"
-          echo -e "13) Instalar LAGUNTEST   \n"
-          echo -e "14) Pasar propiedad   \n"
-          echo -e "15) Prueba de webprocess.sh (no usar)   \n"
-          echo -e "16) Visualizar aplicacion   \n"
-          echo -e "17) Ver logs   \n"
-          echo -e "18) Conectar SSH    \n"
-          echo -e "19) No hay 19   \n"
-  	      echo -e "20) fin   \n"
+          echo""
+          echo " _______________________________ "
+        	echo -e "1) Instala Apache "
+          echo -e "2) Arrancar el servicio apache "
+          echo -e "3) Informacion APACHE    "
+          echo -e "4) Visualizar web por defecto     "
+          echo -e "5) Personalizar index.html     "
+          echo -e "6) Crear VIRTUALHOST     "
+          echo -e "7) Test VIRTUALHOST     "
+          echo -e "8) Instalar PHP     "
+          echo -e "9) Test PHP    "
+          echo -e "10) Instalar paquetes LAGUNTEST   "
+          echo -e "11) Crear entorno virtual Python3   "
+          echo -e "12) Instalar librerias Python    "
+          echo -e "13) Instalar LAGUNTEST   "
+          echo -e "14) Pasar propiedad   "
+          echo -e "15) Prueba de webprocess.sh (no usar)   "
+          echo -e "16) Visualizar aplicacion   "
+          echo -e "17) Ver logs   "
+          echo -e "18) Conectar SSH    "
+          echo -e "19) No hay 19   "
+  	      echo -e "20) Fin   "
           read -p "Elige una opcion:" opcionmenuppal
 
   	case $opcionmenuppal in
@@ -280,6 +279,6 @@ function main(){
   done
 
   echo "Fin del Programa"
-  exit 0<
+  exit 0
 }
 main
