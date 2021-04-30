@@ -168,7 +168,7 @@ instalandoLibreriasPythonLagunTest(){
 #                  13) INSTALAR LAGUNTEST                 #
 ###########################################################
 instalandoAplicacionLagunTest(){
-  cp -r textos /var/www/laguntest/public_html/
+  cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
   sudo chmod +x webprocess.sh
   cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
 
@@ -229,6 +229,9 @@ function main(){
           echo -e "5) Personalizar index.html     \n"
           echo -e "6) Crear VIRTUALHOST     \n"
           echo -e "7) Test VIRTUALHOST     \n"
+          echo -e "8) Instalar PHP     \n"
+          echo -e "9) ...     \n"
+
   	      echo -e "20) fin \n"
           read -p "Elige una opcion:" opcionmenuppal
   	case $opcionmenuppal in
