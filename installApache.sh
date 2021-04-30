@@ -158,7 +158,7 @@ creandoEntornoVirtualPython3(){
 	fi
 }
 ###########################################################
-#                  12)INSTALAR LIBRERIAS PYTHON           #
+#              12)INSTALAR LIBRERIAS PYTHON               #
 ###########################################################
 instalandoLibreriasPythonLagunTest(){
   usuario=$(id -u) #se guarda en una variable el id del usuario actual
@@ -166,11 +166,12 @@ instalandoLibreriasPythonLagunTest(){
   echo $rutaPrincipal
   cd $rutaPrincipal
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
-  source /var/www/laguntest/public_html/.env/bin/activate virtualenv#se activa el entorno de python
-  sudo pip3 install -r requirements.txt
+  ls /var/www/laguntest/public_html/
+  source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
   sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
-    echo -e "${GREEN}LIBRERIAS instaladas"
-    #esto se tiene que ejecutar dentro del www-data
+  sudo pip3 install -r /var/www/laguntest/public_html/.env/requirements.txt
+  echo -e "${GREEN}LIBRERIAS instaladas"
+  
 }
 
 ###########################################################
@@ -197,7 +198,7 @@ pasoPropiedad(){
 
 
 pruebaWebprocess(){
-  sudo su - www-data -s /bin/bash
+  sudo su www-data -s /bin/bash
   cd /var/www/laguntest/public_html/
   ./webprocess.sh
   echo -e "${GREEN}Webprocess ejecutado"
@@ -210,7 +211,9 @@ pruebaWebprocess(){
 #                  16) VISUALIZAR APLICACION                    #
 ###########################################################
 visualizandoAplicacion(){
-  echo "falta"
+  sudo cp index.php /var/www/laguntest/public_html
+  firefox http://localhost:8888/index.php
+  echo -e "${GREEN}Tested"
 }
 
 ###########################################################
