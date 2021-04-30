@@ -1,7 +1,7 @@
-  #!/bin/bash
-  ###########################################################
-  #                  1) INICIALIZACIONES PREVIAS          #
-  ###########################################################
+#!/bin/bash
+###########################################################
+#                  1) INICIALIZACIONES PREVIAS          #
+###########################################################
 rutaPrincipal=$( pwd )
 ###########################################################
 #                  1) INSTALL APACHE                     #
@@ -82,8 +82,8 @@ personalIndex(){
 createVirtualhost(){
   sudo mkdir /var/www/laguntest
   sudo mkdir /var/www/laguntest/public_html
-  sudo cp index.html /var/www/laguntest/public_html 		#copiamos el index
-  sudo cp -r grupo /var/www/laguntest/public_html		#copiamos la carpeta grupo
+  sudo cp index.html /var/www/laguntest/public_html 	 #copiamos el index
+  sudo cp -r grupo /var/www/laguntest/public_html		   #copiamos la carpeta grupo
 
   echo "ficheros copiados a /var/www/laguntest/public_html"
   echo "creando localhost "
