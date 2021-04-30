@@ -166,11 +166,11 @@ instalandoLibreriasPythonLagunTest(){
   echo $rutaPrincipal
   cd $rutaPrincipal
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
-  source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
-  sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
+  source /var/www/laguntest/public_html/.env/bin/activate virtualenv#se activa el entorno de python
   sudo pip3 install -r requirements.txt
-  deactivate
-  echo -e "${GREEN}LIBRERIAS instaladas"
+  sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
+    echo -e "${GREEN}LIBRERIAS instaladas"
+    #esto se tiene que ejecutar dentro del www-data
 }
 
 ###########################################################
