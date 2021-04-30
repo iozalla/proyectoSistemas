@@ -168,9 +168,16 @@ instalandoLibreriasPythonLagunTest(){
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
   ls /var/www/laguntest/public_html/
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
+  pip3 list
   sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
-  sudo pip3 install -r /var/www/laguntest/public_html/.env/requirements.txt
+  cd /var/www/laguntest/public_html/.env
+  pip3 list
+  sudo /var/www/laguntest/public_html/.env/bin/python -m pip install -r requirements.txt	#el comando que habia antes usaba pip3 que llamaba al instalador de paquetes de python e instalaba los paquetes en el ordenador. nosotros solo queremos instalarlos en el virtualenv asi que llamamos al pip del mismo
+  pip3 list
+  
   echo -e "${GREEN}LIBRERIAS instaladas"
+  deactivate
+  cd $rutaPrincipal
   
 }
 
@@ -178,6 +185,7 @@ instalandoLibreriasPythonLagunTest(){
 #                  13) INSTALAR LAGUNTEST                 #
 ###########################################################
 instalandoAplicacionLagunTest(){
+  cd $rutaPrincipal
   sudo cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
   sudo chmod +x webprocess.sh
   sudo cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
@@ -198,11 +206,14 @@ pasoPropiedad(){
 
 
 pruebaWebprocess(){
+  echo "1º cd /var/www/laguntest/public_html/"
+  echo "2º ./webprocess.sh textos/english.doc.txt"
+  echo "3º exit"
+  echo "4º 16)"
   sudo su www-data -s /bin/bash
-  cd /var/www/laguntest/public_html/
-  ./webprocess.sh
+  
   echo -e "${GREEN}Webprocess ejecutado"
-  exit
+
 }
 
 
@@ -284,7 +295,7 @@ function main(){
 
   	case $opcionmenuppal in
 
-   			1) apacheInstall;;
+   		1) apacheInstall;;
         2) apacheStart;;
         3) apacheTest;;
         4) apacheIndex;;
@@ -311,7 +322,7 @@ function main(){
   done
 
   echo "トマトとチョリソのマカロニ"
-  echo "Asier Astorquiza, Iñigo Ozalla, Iker bobo, Endika Eiros"
+  echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
   exit 0
 }
 main
