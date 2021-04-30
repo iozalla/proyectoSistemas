@@ -181,6 +181,13 @@ pasoPropiedad(){
 }
 
 ###########################################################
+#                  16) PASO PROPIEDAD                     #
+###########################################################
+visualizandoAplicacion(){
+
+}
+
+###########################################################
 #                  17) VER LOGS                           #
 ###########################################################
 viendoLogs(){
@@ -221,7 +228,7 @@ function main(){
   while test $opcionmenuppal -ne 20
   do
   	#Muestra el menu
-        	echo -e "1 Instala Apache \n"
+        	echo -e "1) Instala Apache \n"
           echo -e "2) Arrancar el servicio apache \n"
           echo -e "3) Informacion APACHE    \n"
           echo -e "4) Visualizar web por defecto     \n"
@@ -229,6 +236,9 @@ function main(){
           echo -e "6) Crear VIRTUALHOST     \n"
           echo -e "7) Test VIRTUALHOST     \n"
           echo -e "8) Instalar PHP     \n"
+          echo -e "9) ...     \n"
+
+  	      echo -e "20) fin \n"
           echo -e "9) Test PHP    \n"
           echo -e "10) Instalar paquetes LAGUNTEST   \n"
           echo -e "11) Crear entorno virtual Python3   \n"
@@ -242,10 +252,28 @@ function main(){
           echo -e "19) No hay 19   \n"
   	      echo -e "20) fin   \n"
           read -p "Elige una opcion:" opcionmenuppal
+
   	case $opcionmenuppal in
    			1) apacheInstall;;
-        2)
-  			20) fin;;
+        2) apacheStart;;
+        3) apacheTest;;
+        4) apacheIndex;;
+        5) personalIndex;;
+        6) createVirtualhost;;
+        7) virtualhostTest;;
+        8) phpInstall;;
+        9) phpTest;;
+        10) instalandoPaquetesUbuntuLagunTest;;
+        11) creandoEntornoVirtualPython3;;
+        12) instalandoLibreriasPythonLagunTest;;
+        13) instalandoAplicacionLagunTest;;
+        14) pasoPropiedad;;
+        15) echo "no hay 15";;
+        16) visualizandoAplicacion;;
+        17) viendoLogs;;
+        18) echo "no hay 18";;
+        19) echo "no hay 19";;
+        20) fin;;
   			*) ;;
 
   	esac
