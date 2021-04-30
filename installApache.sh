@@ -229,9 +229,18 @@ function main(){
           echo -e "6) Crear VIRTUALHOST     \n"
           echo -e "7) Test VIRTUALHOST     \n"
           echo -e "8) Instalar PHP     \n"
-          echo -e "9) ...     \n"
-
-  	      echo -e "20) fin \n"
+          echo -e "9) Test PHP    \n"
+          echo -e "10) Instalar paquetes LAGUNTEST   \n"
+          echo -e "11) Crear entorno virtual Python3   \n"
+          echo -e "12) Instalar librerias Python    \n"
+          echo -e "13) Instalar LAGUNTEST   \n"
+          echo -e "14) Pasar propiedad   \n"
+          echo -e "15) Prueba de webprocess.sh (no usar)   \n"
+          echo -e "16) Visualizar aplicacion   \n"
+          echo -e "17) Ver logs   \n"
+          echo -e "18) Conectar SSH    \n"
+          echo -e "19) No hay 19   \n"
+  	      echo -e "20) fin   \n"
           read -p "Elige una opcion:" opcionmenuppal
   	case $opcionmenuppal in
    			1) apacheInstall;;
