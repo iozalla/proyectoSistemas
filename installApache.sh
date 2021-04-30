@@ -222,7 +222,6 @@ function main(){
   do
   	#Muestra el menu
         	echo -e "1 Instala Apache \n"
-  	      echo -e "...\n"
           echo -e "2) Arrancar el servicio apache \n"
           echo -e "3) Informacion APACHE    \n"
           echo -e "4) Visualizar web por defecto     \n"
@@ -244,5 +243,5 @@ function main(){
   done
 
   echo "Fin del Programa"
-  exit 0
+  exit 0<
 }
