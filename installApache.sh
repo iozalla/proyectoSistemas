@@ -6,7 +6,7 @@ rutaPrincipal=$( pwd )
 ###########################################################
 #                  1) INSTALL APACHE                     #
 ###########################################################
-installApache(){
+apacheInstall(){
   dpkg -s apache2 >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
   if [ $ultima -eq 0 ]; then echo "apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
@@ -38,7 +38,7 @@ apacheStart(){
 
 
 ###########################################################
-#                  3) INSTALL NETSTAT                     #
+#                  3) Ver puertos Apache                  #
 ###########################################################
 installNetstat(){
   dpkg -s net-tools>&/dev/null 	#se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
@@ -53,7 +53,7 @@ installNetstat(){
 }
 
 ###########################################################
-#                  4) TEST APACHE                     #
+#                  3) TEST APACHE                     #
 ###########################################################
 apacheTest(){
   echo "Info about apache: "
@@ -61,14 +61,14 @@ apacheTest(){
 }
 
 ###########################################################
-#                  5) ABRIR INDEX                     #
+#                  4) ABRIR INDEX                     #
 ###########################################################
 apacheIndex(){
   firefox http://127.0.0.1
 }
 
 ###########################################################
-#                  6) COPIAR INDEX                     #
+#                  5) CREAR INDEX PERSONALIZADO           #
 ###########################################################
 personalIndex(){
   sudo cp index.html /var/www/html/
@@ -77,7 +77,7 @@ personalIndex(){
   apacheIndex
 }
 ###########################################################
-#                  7) CREAR VIRTUALHOST                   #
+#                  6) CREAR VIRTUALHOST                   #
 ###########################################################
 createVirtualhost(){
   sudo mkdir /var/www/laguntest
@@ -91,6 +91,12 @@ createVirtualhost(){
   sudo cp grupo.es.conf /etc/apache2/sites-available
   sudo a2ensite grupo.es.conf
   sudo service apache2 restart
+
+}
+###########################################################
+#                  7) TEST VIRTUALHOST                   #
+###########################################################
+virtualhostTest(){
   firefox http://localhost:8888/index.html
 }
 
@@ -194,4 +200,46 @@ conectarssh(){
 
   ssh ./proyectoSistemas/.installApache.sh
 
+}
+###########################################################
+#                     20) SALIR                          #
+###########################################################
+
+function fin()
+{
+	echo -e "¿Quieres salir del programa?(S/N)\n"
+        read respuesta
+	if [ $respuesta == "N" ]
+		then
+			opcionmenuppal=0
+		fi
+}
+
+### Main ###
+function main(){
+  opcionmenuppal=0
+  while test $opcionmenuppal -ne 20
+  do
+  	#Muestra el menu
+        	echo -e "1 Instala Apache \n"
+  	      echo -e "...\n"
+          echo -e "2) Arrancar el servicio apache \n"
+          echo -e "3) Informacion APACHE    \n"
+          echo -e "4) Visualizar web por defecto     \n"
+          echo -e "5) Personalizar index.html     \n"
+          echo -e "6) Crear VIRTUALHOST     \n"
+          echo -e "7) Test VIRTUALHOST     \n"
+  	      echo -e "20) fin \n"
+          read -p "Elige una opcion:" opcionmenuppal
+  	case $opcionmenuppal in
+   			1) apacheInstall;;
+        2)
+  			20) fin;;
+  			*) ;;
+
+  	esac
+  done
+
+  echo "Fin del Programa"
+  exit 0
 }
