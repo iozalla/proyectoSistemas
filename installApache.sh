@@ -282,3 +282,4 @@ function main(){
   echo "Fin del Programa"
   exit 0<
 }
+main
