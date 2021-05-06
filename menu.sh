@@ -238,16 +238,11 @@ viendoLogs(){
 #                  18) CONECTAR SSH                       #
 ###########################################################
 conectarssh(){
-  read -p "${CYAN}Introduce <USUARIO>@<IP>${NC}" $ssh           #Se solicita la direccion a la que se va a conectar
-  ssh $ssh                                          #Se realiza la conexion
-  tar -czvf laguntest.tar.gz ./proyectoSistemas/    #
-  sudo scp ~/laguntest.tar.gz $ssh:Escritorio
-  ssh tar -zxvf laguntest.tar.gz
-  rm laguntest.tar.gz
-  ssh rm laguntest.tar.gz
-
-  ssh ./proyectoSistemas/.installApache.sh
-
+  read -p "Introduce <USUARIO>@<IP> " $ssh           #Se solicita la direccion a la que se va a conectar
+  ssh mkdir pp
+  sudo scp -r ~/proyectoSistemas/ $ssh:Escritorio
+  ssh ./proyectoSistemas/.menu.sh
+# scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio
 }
 ###########################################################
 #                     20) SALIR                          #
@@ -261,6 +256,9 @@ function fin()
 		then
 			opcionmenuppal=0
 		fi
+    echo -e "${PURPLE}トマトとチョリソのマカロニ"
+    echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+    exit 0
 }
 ###########################################################
 #                     21) TODO                            #
@@ -319,7 +317,7 @@ function todo(){
 function main(){
 
     opcionmenuppal=0
-    while test $opcionmenuppal -ne 21
+    while test $opcionmenuppal -ne 20
     do
     	#Muestra el menu
         echo -e "_____________________________________________  "
@@ -342,7 +340,8 @@ function main(){
         echo -e "17) Ver logs   "
         echo -e "18) Conectar SSH    "
         echo -e "19) No hay 19   "
-	      echo -e "20) Fin   ${NC}"
+	      echo -e "20) Fin  "
+        echo -e "21) Todo   ${NC}"
         read -p "Elige una opcion: " opcionmenuppal
         echo ""
 
@@ -365,17 +364,13 @@ function main(){
         15) pruebaWebprocess;;
         16) visualizandoAplicacion;;
         17) viendoLogs;;
-        18) echo "no hay 18";;
+        18) conectarssh;;
         19) echo "no hay 19";;
         20) fin;;
         21) todo;;
         *) ;;
     	esac
     done
-
-    echo -e "${PURPLE}トマトとチョリソのマカロニ"
-    echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
-    exit 0
 
 }
 main
