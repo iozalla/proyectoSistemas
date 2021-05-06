@@ -50,13 +50,13 @@ apacheStart(){
 
 apacheTest(){
   dpkg -s net-tools>&/dev/null #se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
-  ultima=$? 			#se mira el codigo de respuesta que ha devuelto el ultimo comando		
+  ultima=$? 			#se mira el codigo de respuesta que ha devuelto el ultimo comando
   if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed "  #si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
   else 						#si no se instala
     echo "Installing netstat..."
     sudo apt-get --assume-yes install net-tools>&/dev/null
     echo -e "${GREEN}Installed"
-  fi		
+  fi
   echo "Info about apache: "
   sudo netstat -anp | grep "apache2"
 }
@@ -238,6 +238,19 @@ conectarssh(){
 # scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio
 }
 ###########################################################
+#            19) MOSTRAR INTENTOS DE CONEXION             #
+###########################################################
+
+mostrarIntentosConexion(){
+  cat /var/log/auth.log > auth.log.txt
+  cat /var/log/auth.log.1 >> auth.log.txt
+  zcat /var/log/auth.log.2.gz >> auth.log.txt
+  zcat /var/log/auth.log.3.gz >> auth.log.txt
+  zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
+  less auth.log.txt | grep 'Failed password\|Accepted password' #Se hace un filtrado y se muestra solo las lineas que contienen Failed password o Accepted password
+}
+
+###########################################################
 #                     20) SALIR                          #
 ###########################################################
 
@@ -368,7 +381,7 @@ function main(){
         16) visualizandoAplicacion;;
         17) viendoLogs;;
         18) conectarssh;;
-        19) echo "no hay 19";;
+        19) mostrarIntentosConexion;;
         20) fin;;
         21) todo;;
         *) ;;
