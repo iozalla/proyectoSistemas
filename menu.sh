@@ -159,7 +159,7 @@ creandoEntornoVirtualPython3(){
 	fi
 }
 ###########################################################
-#              12)INSTALAR LIBRERIAS PYTHON               #
+#              12) INSTALAR LIBRERIAS PYTHON              #
 ###########################################################
 instalandoLibreriasPythonLagunTest(){
   usuario=$(id -u) #se guarda en una variable el id del usuario actual
@@ -175,11 +175,11 @@ instalandoLibreriasPythonLagunTest(){
   pip3 list
   sudo /var/www/laguntest/public_html/.env/bin/python -m pip install -r requirements.txt	#el comando que habia antes usaba pip3 que llamaba al instalador de paquetes de python e instalaba los paquetes en el ordenador. nosotros solo queremos instalarlos en el virtualenv asi que llamamos al pip del mismo
   pip3 list
-  
+
   echo -e "${GREEN}LIBRERIAS instaladas"
   deactivate
   cd $rutaPrincipal
-  
+
 }
 
 ###########################################################
@@ -190,7 +190,7 @@ instalandoAplicacionLagunTest(){
   sudo cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
   sudo chmod +x webprocess.sh
   sudo cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
-  echo -e "${GREEN}Aplicacion instalada"
+  echo -e "${GREEN}Aplicacion instalada${NC}"
 
 }
 ###########################################################
@@ -198,7 +198,7 @@ instalandoAplicacionLagunTest(){
 ###########################################################
 pasoPropiedad(){
   sudo chown -R www-data:www-data /var/www
-  echo -e "${GREEN}Hecho"
+  echo -e "${GREEN}Hecho${NC}"
 }
 
 ###########################################################
@@ -212,8 +212,8 @@ pruebaWebprocess(){
   echo "3º exit"
   echo "4º 16)"
   sudo su www-data -s /bin/bash
-  
-  echo -e "${GREEN}Webprocess ejecutado"
+
+  echo -e "${GREEN}Webprocess ejecutado${NC}"
 
 }
 
@@ -225,7 +225,7 @@ pruebaWebprocess(){
 visualizandoAplicacion(){
   sudo cp index.php /var/www/laguntest/public_html
   firefox http://localhost:8888/index.php
-  echo -e "${GREEN}Tested"
+  echo -e "${GREEN}Tested${NC}"
 }
 
 ###########################################################
@@ -238,7 +238,7 @@ viendoLogs(){
 #                  18) CONECTAR SSH                       #
 ###########################################################
 conectarssh(){
-  read -p "Introduce <USUARIO>@<IP>" $ssh           #Se solicita la direccion a la que se va a conectar
+  read -p "${CYAN}Introduce <USUARIO>@<IP>${NC}" $ssh           #Se solicita la direccion a la que se va a conectar
   ssh $ssh                                          #Se realiza la conexion
   tar -czvf laguntest.tar.gz ./proyectoSistemas/    #
   sudo scp ~/laguntest.tar.gz $ssh:Escritorio
@@ -262,41 +262,95 @@ function fin()
 			opcionmenuppal=0
 		fi
 }
+###########################################################
+#                     21) TODO                            #
+###########################################################
+function todo(){
+
+  apacheInstall
+
+  apacheStart
+
+  apacheTest
+
+  apacheIndex
+
+  personalIndex
+
+  createVirtualhost
+
+  virtualhostTest
+
+  phpInstall
+
+  phpTest
+
+  instalandoPaquetesUbuntuLagunTest
+
+  creandoEntornoVirtualPython3
+
+  instalandoLibreriasPythonLagunTest
+
+  instalandoAplicacionLagunTest
+
+  pasoPropiedad
+
+  #pruebaWebprocess
+
+  visualizandoAplicacion
+
+  viendoLogs
+
+  echo "no hay 18"
+
+  echo "no hay 19"
+
+  echo -e "${PURPLE}トマトとチョリソのマカロニ"
+  echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+  exit 0
+
+}
+
+###########################################################
+#                   ### Main ###                          #
+###########################################################
 
 ### Main ###
 function main(){
-  opcionmenuppal=0
-  while test $opcionmenuppal -ne 20
-  do
-  	#Muestra el menu
 
-          echo -e "_____________________________________________  "
-        	echo -e "${YELLOW}1) Instala Apache "
-          echo -e "2) Arrancar el servicio apache "
-          echo -e "3) Informacion APACHE    "
-          echo -e "4) Visualizar web por defecto     "
-          echo -e "5) Personalizar index.html     "
-          echo -e "6) Crear VIRTUALHOST     "
-          echo -e "7) Test VIRTUALHOST     "
-          echo -e "8) Instalar PHP     "
-          echo -e "9) Test PHP    "
-          echo -e "10) Instalar paquetes LAGUNTEST   "
-          echo -e "11) Crear entorno virtual Python3   "
-          echo -e "12) Instalar librerias Python    "
-          echo -e "13) Instalar LAGUNTEST   "
-          echo -e "14) Pasar propiedad   "
-          echo -e "15) Prueba de webprocess.sh (no usar)   "
-          echo -e "16) Visualizar aplicacion   "
-          echo -e "17) Ver logs   "
-          echo -e "18) Conectar SSH    "
-          echo -e "19) No hay 19   "
-  	      echo -e "20) Fin   ${NC}"
-          read -p "Elige una opcion:" opcionmenuppal
-          echo ""
+  if [ $1 -n ]; then todo
+  else
+    opcionmenuppal=0
+    while test $opcionmenuppal -ne 20
+    do
+    	#Muestra el menu
+        echo -e "_____________________________________________  "
+      	echo -e "${YELLOW}1) Instala Apache "
+        echo -e "2) Arrancar el servicio apache "
+        echo -e "3) Informacion APACHE    "
+        echo -e "4) Visualizar web por defecto     "
+        echo -e "5) Personalizar index.html     "
+        echo -e "6) Crear VIRTUALHOST     "
+        echo -e "7) Test VIRTUALHOST     "
+        echo -e "8) Instalar PHP     "
+        echo -e "9) Test PHP    "
+        echo -e "10) Instalar paquetes LAGUNTEST   "
+        echo -e "11) Crear entorno virtual Python3   "
+        echo -e "12) Instalar librerias Python    "
+        echo -e "13) Instalar LAGUNTEST   "
+        echo -e "14) Pasar propiedad   "
+        echo -e "15) Prueba de webprocess.sh (no usar)   "
+        echo -e "16) Visualizar aplicacion   "
+        echo -e "17) Ver logs   "
+        echo -e "18) Conectar SSH    "
+        echo -e "19) No hay 19   "
+	      echo -e "20) Fin   ${NC}"
+        read -p "Elige una opcion: " opcionmenuppal
+        echo ""
 
-  	case $opcionmenuppal in
+    	case $opcionmenuppal in
 
-   		1) apacheInstall;;
+   		  1) apacheInstall;;
         2) apacheStart;;
         3) apacheTest;;
         4) apacheIndex;;
@@ -317,13 +371,13 @@ function main(){
         19) echo "no hay 19";;
         20) fin;;
   			*) ;;
+    	esac
+    done
 
-  	esac
+    echo -e "${PURPLE}トマトとチョリソのマカロニ"
+    echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+    exit 0
 
-  done
-
-  echo -e "${PURPLE}トマトとチョリソのマカロニ"
-  echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
-  exit 0
+  fi
 }
 main
