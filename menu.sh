@@ -318,10 +318,8 @@ function todo(){
 ### Main ###
 function main(){
 
-  if [ $1 -n ]; then todo
-  else
     opcionmenuppal=0
-    while test $opcionmenuppal -ne 20
+    while test $opcionmenuppal -ne 21
     do
     	#Muestra el menu
         echo -e "_____________________________________________  "
@@ -370,7 +368,8 @@ function main(){
         18) echo "no hay 18";;
         19) echo "no hay 19";;
         20) fin;;
-  			*) ;;
+        21) todo;;
+        *) ;;
     	esac
     done
 
@@ -378,6 +377,5 @@ function main(){
     echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
     exit 0
 
-  fi
 }
 main
