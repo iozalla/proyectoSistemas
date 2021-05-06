@@ -7,7 +7,7 @@ RED='\033[0;31m'
 NC='\033[0m' #COLOR ORIGINAL
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
-CYAN='\033[0;36'
+CYAN='\033[0;36m'
 PURPLE='\033[0;35m'
 ###########################################################
 #                  1) INSTALL APACHE                     #
@@ -238,10 +238,9 @@ viendoLogs(){
 #                  18) CONECTAR SSH                       #
 ###########################################################
 conectarssh(){
-  read -p "Introduce <USUARIO>@<IP> " $ssh           #Se solicita la direccion a la que se va a conectar
-  ssh mkdir pp
-  sudo scp -r ~/proyectoSistemas/ $ssh:Escritorio
-  ssh ./proyectoSistemas/.menu.sh
+  read -p "Introduce <USUARIO>@<IP> " dir           #Se solicita la direccion a la que se va a conectar
+  scp -r $rutaPrincipal $dir:Escritorio
+  echo -e "Laguntest Instalado"
 # scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio
 }
 ###########################################################
@@ -317,11 +316,20 @@ function todo(){
 function main(){
 
     opcionmenuppal=0
-    while test $opcionmenuppal -ne 20
+    while test $opcionmenuppal -ne 21
     do
     	#Muestra el menu
-        echo -e "_____________________________________________  "
-      	echo -e "${YELLOW}1) Instala Apache "
+        echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
+        echo -e "${CYAN}
+        .____       _____    ________ ____ ________________________________ ____________________
+        |    |     /  _  \  /  _____/|    |   \      \__    ___/\_   _____//   _____/\__    ___/
+        |    |    /  /_\  \/   \  ___|    |   /   |   \|    |    |    __)_ \_____  \   |    |
+        |    |___/    |    \    \_\  \    |  /    |    \    |    |        \/        \  |    |
+        |_______ \____|__  /\______  /______/\____|__  /____|   /_______  /_______  /  |____|
+                \/       \/        \/                \/                 \/        \/"
+
+        echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
+        echo -e "1) Instala Apache "
         echo -e "2) Arrancar el servicio apache "
         echo -e "3) Informacion APACHE    "
         echo -e "4) Visualizar web por defecto     "
@@ -342,6 +350,7 @@ function main(){
         echo -e "19) No hay 19   "
 	      echo -e "20) Fin  "
         echo -e "21) Todo   ${NC}"
+        echo ""
         read -p "Elige una opcion: " opcionmenuppal
         echo ""
 
