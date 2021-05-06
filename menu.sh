@@ -304,12 +304,9 @@ function todo(){
 
   viendoLogs
 
-  echo "no hay 18"
 
-  echo "no hay 19"
 
-  echo -e "${PURPLE}トマトとチョリソのマカロニ"
-  echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+  echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros${NC}"
   exit 0
 
 }
@@ -353,8 +350,8 @@ function main(){
         echo -e "16) Visualizar aplicacion   "
         echo -e "17) Ver logs   "
         echo -e "18) Conectar SSH    "
-        echo -e "19) No hay 19   "
-	      echo -e "20) Fin  "
+        echo -e "19) Ver intentos de SSH "
+	echo -e "20) Fin  "
         echo -e "21) Todo   ${NC}"
         echo ""
         read -p "Elige una opcion: " opcionmenuppal
