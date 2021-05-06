@@ -15,12 +15,12 @@ PURPLE='\033[0;35m'
 apacheInstall(){
   dpkg -s apache2 >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}apache2 already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}apache2 already installed${NC}"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing apache2..."
     sudo apt-get --assume-yes install apache2>&/dev/null
-    echo -e "${GREEN}Installed"
+    echo -e "${GREEN}Installed${NC}"
   fi							#cerrar el if
 }
 
@@ -33,12 +33,12 @@ apacheInstall(){
 apacheStart(){
   service apache2 status|grep 'Active: active (running)'>&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 							#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}already started"	#si el codigo es 0 significará que se ha iniciado el apache
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}Already started${NC}"	#si el codigo es 0 significará que se ha iniciado el apache
 
   else 						#si no, se inicia
-    echo -e "${CYAN}starting apache"
+    echo -e "${CYAN}Starting apache${NC}"
     sudo service apache2 start
-    echo -e "${GREEN}ApacheStarted"
+    echo -e "${GREEN}ApacheStarted${NC}"
 
   fi							#cerrar el if
 }
@@ -51,11 +51,11 @@ apacheStart(){
 apacheTest(){
   dpkg -s net-tools>&/dev/null #se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 			#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed "  #si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed ${NC}"  #si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
   else 						#si no se instala
-    echo "Installing netstat..."
+    echo "Installing netstat...${NC}"
     sudo apt-get --assume-yes install net-tools>&/dev/null
-    echo -e "${GREEN}Installed"
+    echo -e "${GREEN}Installed${NC}"
   fi
   echo "Info about apache: "
   sudo netstat -anp | grep "apache2"
@@ -74,7 +74,7 @@ apacheIndex(){
 personalIndex(){
   sudo cp index.html /var/www/html/
   sudo cp -r grupo /var/www/html/
-  echo -e "${GREEN}ficheros copiados a /var/www/html/ "
+  echo -e "${GREEN}ficheros copiados a /var/www/html/ ${NC}"
   apacheIndex
 }
 ###########################################################
@@ -85,14 +85,13 @@ createVirtualhost(){
   sudo mkdir /var/www/laguntest/public_html
   sudo cp index.html /var/www/laguntest/public_html 	 #copiamos el index
   sudo cp -r grupo /var/www/laguntest/public_html		   #copiamos la carpeta grupo
-
-  echo "ficheros copiados a /var/www/laguntest/public_html"
-  echo "creando localhost "
+  echo "Ficheros copiados a /var/www/laguntest/public_html"
+  echo "Creando localhost "
   sudo cp ports.conf /etc/apache2/				#copiamos la configuracion de los puertos a su sitio
   sudo cp grupo.es.conf /etc/apache2/sites-available
   sudo a2ensite grupo.es.conf
   sudo service apache2 restart
-  echo -e "${GREEN}LOCALHOST creado "
+  echo -e "${GREEN}LOCALHOST creado ${NC}"
 }
 ###########################################################
 #                  7) TEST VIRTUALHOST                   #
@@ -107,7 +106,7 @@ virtualhostTest(){
 phpInstall(){
 dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
   ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}PHP already installed"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}PHP already installed ${NC}"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
     echo "Installing php modules..."
@@ -118,7 +117,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
     echo "Restarting apache service..."
     sudo service apache2 restart
     sudo systemctl reload apache2
-    echo -e "${GREEN}Installed"
+    echo -e "${GREEN}Installed${NC}"
   fi							#cerrar el if
 
 }
@@ -128,7 +127,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 phpTest(){
   sudo cp test.php /var/www/laguntest/public_html
   firefox http://localhost:8888/test.php
-  echo -e "${GREEN}Tested"
+  echo -e "${GREEN}Tested${NC}"
 }
 #################################################################################
 #                       10) INSTALAR PAQUETES LAGUNTEST                         #
@@ -137,7 +136,7 @@ instalandoPaquetesUbuntuLagunTest(){
 	sudo apt-get --assume-yes install python3-pip
 	sudo apt-get --assume-yes install dos2unix
 	sudo apt-get --assume-yes install librsvg2-bin
-  echo -e "${GREEN}paquetes instalados"
+  echo -e "${GREEN}Alication Packages Installed${NC}"
 }
 
 #################################################################################
@@ -147,9 +146,10 @@ creandoEntornoVirtualPython3(){
 	sudo pip3 install virtualenv
 	cd /var/www/laguntest/public_html/
 
-	if [ -d ".env" ] ; then echo -e "${GREEN}Virtual enviroment already created"
+	if [ -d ".env" ] ; then echo -e "${GREEN}Virtual enviroment already created${NC}"
 	else
 		sudo virtualenv -p python3 .env
+    echo -e "${GREEN}Virtual enviroment created${NC}"
 	fi
 }
 ###########################################################
@@ -158,8 +158,7 @@ creandoEntornoVirtualPython3(){
 instalandoLibreriasPythonLagunTest(){
   usuario=$(id -u) #se guarda en una variable el id del usuario actual
   grupo=$(id -g) #se guarda en una variable el id del grupo actual
-  echo $rutaPrincipal
-  cd $rutaPrincipal
+  cd $rutaPrincipal #volvemos a la ruta ORIGINAL
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
   ls /var/www/laguntest/public_html/
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
@@ -170,7 +169,7 @@ instalandoLibreriasPythonLagunTest(){
   sudo /var/www/laguntest/public_html/.env/bin/python -m pip install -r requirements.txt	#el comando que habia antes usaba pip3 que llamaba al instalador de paquetes de python e instalaba los paquetes en el ordenador. nosotros solo queremos instalarlos en el virtualenv asi que llamamos al pip del mismo
   pip3 list
 
-  echo -e "${GREEN}LIBRERIAS instaladas"
+  echo -e "${GREEN}Python libraries installed${NC}"
   deactivate
   cd $rutaPrincipal
 
@@ -205,9 +204,9 @@ pruebaWebprocess(){
   echo "2º ./webprocess.sh textos/english.doc.txt"
   echo "3º exit"
   echo "4º 16)"
+  
   sudo su www-data -s /bin/bash
 
-  echo -e "${GREEN}Webprocess ejecutado${NC}"
 
 }
 
@@ -328,12 +327,12 @@ function main(){
     	#Muestra el menu
         echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
         echo -e "${CYAN}
-        .____       _____    ________ ____ ________________________________ ____________________
-        |    |     /  _  \  /  _____/|    |   \      \__    ___/\_   _____//   _____/\__    ___/
-        |    |    /  /_\  \/   \  ___|    |   /   |   \|    |    |    __)_ \_____  \   |    |
-        |    |___/    |    \    \_\  \    |  /    |    \    |    |        \/        \  |    |
-        |_______ \____|__  /\______  /______/\____|__  /____|   /_______  /_______  /  |____|
-                \/       \/        \/                \/                 \/        \/"
+.____       _____    ________ ____ ________________________________ ____________________
+|    |     /  _  \  /  _____/|    |   \      \__    ___/\_   _____//   _____/\__    ___/
+|    |    /  /_\  \/   \  ___|    |   /   |   \|    |    |    __)_ \_____  \   |    |
+|    |___/    |    \    \_\  \    |  /    |    \    |    |        \/        \  |    |
+|_______ \____|__  /\______  /______/\____|__  /____|   /_______  /_______  /  |____|
+        \/       \/        \/                \/                 \/        \/"
 
         echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
         echo -e "1) Instala Apache "
