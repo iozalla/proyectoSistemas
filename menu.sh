@@ -8,6 +8,7 @@ NC='\033[0m' #COLOR ORIGINAL
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36'
+PURPLE='\033[0;35m'
 ###########################################################
 #                  1) INSTALL APACHE                     #
 ###########################################################
@@ -321,7 +322,7 @@ function main(){
 
   done
 
-  echo "トマトとチョリソのマカロニ"
+  echo -e "${PURPLE}トマトとチョリソのマカロニ"
   echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
   exit 0
 }
