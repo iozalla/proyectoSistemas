@@ -45,24 +45,18 @@ apacheStart(){
 
 
 ###########################################################
-#                  3) Ver puertos Apache                  #
+#                  3) TEST APACHE                     #
 ###########################################################
-installNetstat(){
-  dpkg -s net-tools>&/dev/null 	#se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
-  ultima=$? 					#se mira el codigo de respuesta que ha devuelto el ultimo comando
-  if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed "	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
+apacheTest(){
+  dpkg -s net-tools>&/dev/null #se mira si existe el paquete netstat y se envia el stdout y stderr a un archivo para que no se muestre por pantalla
+  ultima=$? 			#se mira el codigo de respuesta que ha devuelto el ultimo comando		
+  if [ $ultima -eq 0 ]; then echo -e "${GREEN}netstat already installed "  #si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
   else 						#si no se instala
     echo "Installing netstat..."
     sudo apt-get --assume-yes install net-tools>&/dev/null
     echo -e "${GREEN}Installed"
-  fi							#cerrar el if
-}
-
-###########################################################
-#                  3) TEST APACHE                     #
-###########################################################
-apacheTest(){
+  fi		
   echo "Info about apache: "
   sudo netstat -anp | grep "apache2"
 }
