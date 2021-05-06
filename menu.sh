@@ -204,7 +204,7 @@ pruebaWebprocess(){
   echo "2º ./webprocess.sh textos/english.doc.txt"
   echo "3º exit"
   echo "4º 16)"
-  
+
   sudo su www-data -s /bin/bash
 
 
@@ -232,7 +232,7 @@ viendoLogs(){
 ###########################################################
 conectarssh(){
   read -p "Introduce <USUARIO>@<IP> " dir           #Se solicita la direccion a la que se va a conectar
-  scp -r $rutaPrincipal $dir:Escritorio
+  scp -r $rutaPrincipal $dir:Escritorio >&/dev/null
   echo -e "Laguntest Instalado"
 # scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio
 }
@@ -271,40 +271,22 @@ function fin()
 function todo(){
 
   apacheInstall
-
   apacheStart
-
   apacheTest
-
   apacheIndex
-
   personalIndex
-
   createVirtualhost
-
   virtualhostTest
-
   phpInstall
-
   phpTest
-
   instalandoPaquetesUbuntuLagunTest
-
   creandoEntornoVirtualPython3
-
   instalandoLibreriasPythonLagunTest
-
   instalandoAplicacionLagunTest
-
   pasoPropiedad
-
   #pruebaWebprocess
-
   visualizandoAplicacion
-
   viendoLogs
-
-
 
   echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros${NC}"
   exit 0
