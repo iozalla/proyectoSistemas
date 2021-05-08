@@ -1,7 +1,8 @@
 #!/bin/bash
 ###########################################################
-#                  1) INICIALIZACIONES PREVIAS          #
+#                  INICIALIZACIONES PREVIAS          			#
 ###########################################################
+
 rutaPrincipal=$( pwd )
 RED='\033[0;31m'
 NC='\033[0m' #COLOR ORIGINAL
@@ -9,6 +10,18 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 PURPLE='\033[0;35m'
+
+        echo -e "${PURPLE}__________________________________________________________________________________________ "
+        echo -e "${CYAN}
+.____       _____    ________ ____ ________________________________ ____________________
+|    |     /  _  \  /  _____/|    |   \      \__    ___/\_   _____//   _____/\__    ___/
+|    |    /  /_\  \/   \  ___|    |   /   |   \|    |    |    __)_ \_____  \   |    |
+|    |___/    |    \    \_\  \    |  /    |    \    |    |        \/        \  |    |
+|_______ \____|__  /\______  /______/\____|__  /____|   /_______  /_______  /  |____|
+        \/       \/        \/                \/                 \/        \/"
+
+
+
 ###########################################################
 #                  1) INSTALL APACHE                     #
 ###########################################################
@@ -22,6 +35,7 @@ apacheInstall(){
     sudo apt-get --assume-yes install apache2>&/dev/null
     echo -e "${GREEN}Installed${NC}"
   fi							#cerrar el if
+
 }
 
 
@@ -41,6 +55,7 @@ apacheStart(){
     echo -e "${GREEN}ApacheStarted${NC}"
 
   fi							#cerrar el if
+
 }
 
 
@@ -59,6 +74,7 @@ apacheTest(){
   fi
   echo "Info about apache: "
   sudo netstat -anp | grep "apache2"
+
 }
 
 ###########################################################
@@ -66,6 +82,7 @@ apacheTest(){
 ###########################################################
 apacheIndex(){
   firefox http://127.0.0.1
+
 }
 
 ###########################################################
@@ -76,6 +93,7 @@ personalIndex(){
   sudo cp -r grupo /var/www/html/
   echo -e "${GREEN}ficheros copiados a /var/www/html/ ${NC}"
   apacheIndex
+
 }
 ###########################################################
 #                  6) CREAR VIRTUALHOST                   #
@@ -92,12 +110,14 @@ createVirtualhost(){
   sudo a2ensite grupo.es.conf
   sudo service apache2 restart
   echo -e "${GREEN}LOCALHOST creado ${NC}"
+
 }
 ###########################################################
 #                  7) TEST VIRTUALHOST                   #
 ###########################################################
 virtualhostTest(){
   firefox http://localhost:8888/index.html
+
 }
 
 ###########################################################
@@ -120,6 +140,7 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
     echo -e "${GREEN}Installed${NC}"
   fi							#cerrar el if
 
+
 }
 ###########################################################
 #                  9) TEST PHP                            #
@@ -128,6 +149,7 @@ phpTest(){
   sudo cp test.php /var/www/laguntest/public_html
   firefox http://localhost:8888/test.php
   echo -e "${GREEN}Tested${NC}"
+
 }
 #################################################################################
 #                       10) INSTALAR PAQUETES LAGUNTEST                         #
@@ -137,6 +159,7 @@ instalandoPaquetesUbuntuLagunTest(){
 	sudo apt-get --assume-yes install dos2unix
 	sudo apt-get --assume-yes install librsvg2-bin
   echo -e "${GREEN}Alication Packages Installed${NC}"
+
 }
 
 #################################################################################
@@ -151,6 +174,7 @@ creandoEntornoVirtualPython3(){
 		sudo virtualenv -p python3 .env
     echo -e "${GREEN}Virtual enviroment created${NC}"
 	fi
+
 }
 ###########################################################
 #              12) INSTALAR LIBRERIAS PYTHON              #
@@ -162,16 +186,13 @@ instalandoLibreriasPythonLagunTest(){
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
   ls /var/www/laguntest/public_html/
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
-  pip3 list
   sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
   cd /var/www/laguntest/public_html/.env
-  pip3 list
   sudo /var/www/laguntest/public_html/.env/bin/python -m pip install -r requirements.txt	#el comando que habia antes usaba pip3 que llamaba al instalador de paquetes de python e instalaba los paquetes en el ordenador. nosotros solo queremos instalarlos en el virtualenv asi que llamamos al pip del mismo
-  pip3 list
-
   echo -e "${GREEN}Python libraries installed${NC}"
-  deactivate
+  deactivate	#desactivamos el entorno
   cd $rutaPrincipal
+
 
 }
 
@@ -208,6 +229,7 @@ pruebaWebprocess(){
   sudo su www-data -s /bin/bash
 
 
+
 }
 
 
@@ -219,6 +241,7 @@ visualizandoAplicacion(){
   sudo cp index.php /var/www/laguntest/public_html
   firefox http://localhost:8888/index.php
   echo -e "${GREEN}Tested${NC}"
+  
 }
 
 ###########################################################
@@ -231,10 +254,12 @@ viendoLogs(){
 #                  18) CONECTAR SSH                       #
 ###########################################################
 conectarssh(){
+desktop=$( xdg-user-dir DESKTOP)
   read -p "Introduce <USUARIO>@<IP> " dir           #Se solicita la direccion a la que se va a conectar
-  scp -r $rutaPrincipal $dir:Escritorio >&/dev/null
+  scp -r $rutaPrincipal $dir:$desktop  >&/dev/null
   echo -e "Laguntest Instalado"
-# scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio
+# scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio (esta es la estructura que tiene que tener)
+
 }
 ###########################################################
 #            19) MOSTRAR INTENTOS DE CONEXION             #
@@ -247,6 +272,7 @@ mostrarIntentosConexion(){
   zcat /var/log/auth.log.3.gz >> auth.log.txt
   zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
   less auth.log.txt | grep 'Failed password\|Accepted password' #Se hace un filtrado y se muestra solo las lineas que contienen Failed password o Accepted password
+ 
 }
 
 ###########################################################
@@ -261,9 +287,9 @@ function fin()
 		then
 			opcionmenuppal=0
 		fi
-    echo -e "${PURPLE}トマトとチョリソのマカロニ"
-    echo "Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
-    exit 0
+    
+    echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+    
 }
 ###########################################################
 #                     21) TODO                            #
@@ -304,17 +330,8 @@ function main(){
     while test $opcionmenuppal -ne 21
     do
     	#Muestra el menu
-        echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
-        echo -e "${CYAN}
-.____       _____    ________ ____ ________________________________ ____________________
-|    |     /  _  \  /  _____/|    |   \      \__    ___/\_   _____//   _____/\__    ___/
-|    |    /  /_\  \/   \  ___|    |   /   |   \|    |    |    __)_ \_____  \   |    |
-|    |___/    |    \    \_\  \    |  /    |    \    |    |        \/        \  |    |
-|_______ \____|__  /\______  /______/\____|__  /____|   /_______  /_______  /  |____|
-        \/       \/        \/                \/                 \/        \/"
-
-        echo -e "${YELLOW}_____________________________________________________________________________________________________________ "
-        echo -e "1) Instala Apache "
+                echo -e "${PURPLE}__________________________________________________________________________________________ ${NC}"
+        echo -e "${YELLOW}1) Instala Apache "
         echo -e "2) Arrancar el servicio apache "
         echo -e "3) Informacion APACHE    "
         echo -e "4) Visualizar web por defecto     "
@@ -333,11 +350,11 @@ function main(){
         echo -e "17) Ver logs   "
         echo -e "18) Conectar SSH    "
         echo -e "19) Ver intentos de SSH "
-	echo -e "20) Fin  "
+				echo -e "20) Fin  "
         echo -e "21) Todo   ${NC}"
         echo ""
         read -p "Elige una opcion: " opcionmenuppal
-        echo ""
+                echo -e "${PURPLE}__________________________________________________________________________________________ ${NC}"
 
     	case $opcionmenuppal in
 
@@ -363,6 +380,7 @@ function main(){
         20) fin;;
         21) todo;;
         *) ;;
+         
     	esac
     done
 
