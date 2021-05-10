@@ -130,10 +130,9 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 
   else 						#si no se instala
     echo "Installing php modules..."
-    sudo apt-get --assume-yes install php libapache2−mod−php>&/dev/null
-
-    sudo apt-get --assume-yes install php-cli >&/dev/null
-    sudo apt-get --assume-yes install php7.4-cli >&/dev/null
+    sudo apt --assume-yes install php libapache2-mod-php
+    sudo apt --assume-yes install php-cli
+    sudo apt --assume-yes install php7.4-cli
     echo "Restarting apache service..."
     sudo service apache2 restart
     sudo systemctl reload apache2
@@ -307,6 +306,7 @@ function fin()
 		fi
 
     echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+    exit 0
 
 }
 ###########################################################
