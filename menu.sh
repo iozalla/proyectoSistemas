@@ -273,7 +273,7 @@ mostrarIntentosConexion(){
   less auth.log.txt | tr -s ' ' '@' > conexiones.txt
   for linea in `less conexiones.txt|grep 'Accepted@password'`
   do
-    user=`echo $linea | cut -d@ -f4`
+    user=`echo $linea | cut -d@ -f9`
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
@@ -281,7 +281,7 @@ mostrarIntentosConexion(){
   done
   for linea in `less conexiones.txt|grep 'Failed@password'`
   do
-    user=`echo $linea | cut -d@ -f4`
+    user=`echo $linea | cut -d@ -f9`
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
