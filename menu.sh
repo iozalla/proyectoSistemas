@@ -241,7 +241,7 @@ visualizandoAplicacion(){
   sudo cp index.php /var/www/laguntest/public_html
   firefox http://localhost:8888/index.php
   echo -e "${GREEN}Tested${NC}"
-  
+
 }
 
 ###########################################################
@@ -272,7 +272,7 @@ mostrarIntentosConexion(){
   zcat /var/log/auth.log.3.gz >> auth.log.txt
   zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
   less auth.log.txt | grep 'Failed password\|Accepted password' #Se hace un filtrado y se muestra solo las lineas que contienen Failed password o Accepted password
- 
+
 }
 
 ###########################################################
@@ -287,7 +287,7 @@ function fin()
 		then
 			opcionmenuppal=0
 		fi
-    
+
     echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
     exit 0
     
@@ -381,7 +381,7 @@ function main(){
         20) fin;;
         21) todo;;
         *) ;;
-         
+
     	esac
     done
 
