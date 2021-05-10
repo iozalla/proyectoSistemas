@@ -277,7 +277,7 @@ mostrarIntentosConexion(){
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
-    echo -e "Status: [accept] Account name: $user Date: $mes/$dia/$hora "
+    echo -e "Status: [accept]   Account name: $user   Date: $mes/$dia/$hora "
   done
   for linea in `less conexiones.txt|grep 'Failed@password'`
   do
@@ -285,7 +285,7 @@ mostrarIntentosConexion(){
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
-    echo -e "Status: [fail] Account name: $user Date: $mes/$dia/$hora "
+    echo -e "Status: [fail]   Account name: $user  Date: $mes/$dia/$hora "
   done
   rm conexiones.txt
   rm auth.log.txt
