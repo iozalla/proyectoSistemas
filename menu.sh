@@ -271,22 +271,21 @@ mostrarIntentosConexion(){
   zcat /var/log/auth.log.3.gz >> auth.log.txt
   zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
   less auth.log.txt | tr -s ' ' '@' > conexiones.txt
-  for linea in `less conexiones.txt|grep 'Accepted password'`
+  for linea in `less conexiones.txt|grep 'Accepted@password'`
   do
-    user=`echo $linea | cut -d@ -f15`
+    user=`echo $linea | cut -d@ -f4`
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
-    echo -e "Status: [accept] Account name: $nombre Date: $mes\t$dia\t$hora "
+    echo -e "Status: [accept] Account name: $user Date: $mes/$dia/$hora "
   done
-  for linea in `less conexiones.txt|grep 'Failed password'`
+  for linea in `less conexiones.txt|grep 'Failed@password'`
   do
-    user=`echo $linea | cut -d@ -f15`
+    user=`echo $linea | cut -d@ -f4`
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
-    aceptado=`echo $linea | cut -d@ -f`
-    echo -e "Status: [fail] Account name: $nombre Date: $mes\t$dia\t$hora "
+    echo -e "Status: [fail] Account name: $user Date: $mes/$dia/$hora "
   done
   rm conexiones.txt
   rm auth.log.txt
