@@ -241,7 +241,7 @@ visualizandoAplicacion(){
   sudo cp index.php /var/www/laguntest/public_html
   firefox http://localhost:8888/index.php
   echo -e "${GREEN}Tested${NC}"
-  
+
 }
 
 ###########################################################
@@ -271,8 +271,26 @@ mostrarIntentosConexion(){
   zcat /var/log/auth.log.2.gz >> auth.log.txt
   zcat /var/log/auth.log.3.gz >> auth.log.txt
   zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
-  less auth.log.txt | grep 'Failed password\|Accepted password' #Se hace un filtrado y se muestra solo las lineas que contienen Failed password o Accepted password
- 
+  less auth.log.txt | tr -s ' ' '@' > conexiones.txt
+  for linea in `less conexiones.txt | grep 'Accepted password'`
+  do
+    user=`echo $linea | cut -d@ -f15`
+    dia=`echo $linea | cut -d@ -f2`
+    mes=`echo $linea | cut -d@ -f1`
+    hora=`echo $linea | cut -d@ -f3`
+    echo -e "Status: [accept] Account name: $nombre Date: $mes\t$dia\t$hora "
+  done
+  for linea in `less conexiones.txt | grep 'Failed password'`
+  do
+    user=`echo $linea | cut -d@ -f15`
+    dia=`echo $linea | cut -d@ -f2`
+    mes=`echo $linea | cut -d@ -f1`
+    hora=`echo $linea | cut -d@ -f3`
+    aceptado=`echo $linea | cut -d@ -f`
+    echo -e "Status: [fail] Account name: $nombre Date: $mes\t$dia\t$hora "
+  done
+  rm conexiones.txt
+  rm auth.log.txt
 }
 
 ###########################################################
@@ -287,9 +305,9 @@ function fin()
 		then
 			opcionmenuppal=0
 		fi
-    
+
     echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
-    
+
 }
 ###########################################################
 #                     21) TODO                            #
@@ -380,7 +398,7 @@ function main(){
         20) fin;;
         21) todo;;
         *) ;;
-         
+
     	esac
     done
 
