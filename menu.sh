@@ -289,6 +289,7 @@ function fin()
 		fi
     
     echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
+    exit 0
     
 }
 ###########################################################
