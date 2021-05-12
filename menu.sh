@@ -81,7 +81,7 @@ apacheTest(){
 #                  4) ABRIR INDEX                     #
 ###########################################################
 apacheIndex(){
-  firefox http://127.0.0.1
+  firefox http://127.0.0.1  #se abre firefox en la direccion http://127.0.0.1 (localhost)
 
 }
 
@@ -89,8 +89,8 @@ apacheIndex(){
 #                  5) CREAR INDEX PERSONALIZADO           #
 ###########################################################
 personalIndex(){
-  sudo cp index.html /var/www/html/
-  sudo cp -r grupo /var/www/html/
+  sudo cp index.html /var/www/html/                 #se copia el index.html a la carpeta /var/www/html/
+  sudo cp -r grupo /var/www/html/                   #se copia la carpeta grupo (fotos) a la carpeta /var/www/html/
   echo -e "${GREEN}ficheros copiados a /var/www/html/ ${NC}"
   apacheIndex
 
@@ -100,15 +100,15 @@ personalIndex(){
 ###########################################################
 createVirtualhost(){
   sudo mkdir /var/www/laguntest
-  sudo mkdir /var/www/laguntest/public_html
+  sudo mkdir /var/www/laguntest/public_html            #creamos las carpetas necesarias
   sudo cp index.html /var/www/laguntest/public_html 	 #copiamos el index
   sudo cp -r grupo /var/www/laguntest/public_html		   #copiamos la carpeta grupo
   echo "Ficheros copiados a /var/www/laguntest/public_html"
   echo "Creando localhost "
-  sudo cp ports.conf /etc/apache2/				#copiamos la configuracion de los puertos a su sitio
-  sudo cp grupo.es.conf /etc/apache2/sites-available
-  sudo a2ensite grupo.es.conf
-  sudo service apache2 restart
+  sudo cp ports.conf /etc/apache2/				            #copiamos la configuracion de los puertos a su sitio
+  sudo cp grupo.es.conf /etc/apache2/sites-available  #copiamos la configuracion de la web a su sitio
+  sudo a2ensite grupo.es.conf                         #hacemos el link con la configuracion
+  sudo service apache2 restart                        #reiniciamos apache2
   echo -e "${GREEN}LOCALHOST creado ${NC}"
 
 }
@@ -116,7 +116,7 @@ createVirtualhost(){
 #                  7) TEST VIRTUALHOST                   #
 ###########################################################
 virtualhostTest(){
-  firefox http://localhost:8888/index.html
+  firefox http://localhost:8888/index.html            #se abre firefox en la direccion http://localhost:8888/index.html
 
 }
 
@@ -129,13 +129,13 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
   if [ $ultima -eq 0 ]; then echo -e "${GREEN}PHP already installed ${NC}"	#si el codigo es 0 significará que se ha encontrado el paquete y que ya esta instalado
 
   else 						#si no se instala
-    echo "Installing php modules..."
+    echo "Installing php modules..."                    #instalamos modulos necesarios para PHP
     sudo apt --assume-yes install php libapache2-mod-php
     sudo apt --assume-yes install php-cli
     sudo apt --assume-yes install php7.4-cli
     echo "Restarting apache service..."
-    sudo service apache2 restart
-    sudo systemctl reload apache2
+    sudo service apache2 restart                        #recargamos apache2
+    sudo systemctl reload apache2                       #REINICIAMOS apache2
     echo -e "${GREEN}Installed${NC}"
   fi							#cerrar el if
 
@@ -146,14 +146,14 @@ dpkg -s php >&/dev/null 	#se mira si existe el paquete apache2 y se envia el std
 ###########################################################
 phpTest(){
   sudo cp test.php /var/www/laguntest/public_html
-  firefox http://localhost:8888/test.php
+  firefox http://localhost:8888/test.php                #se abre firefox en la direccion http://localhost:8888/test.php
   echo -e "${GREEN}Tested${NC}"
 
 }
 #################################################################################
 #                       10) INSTALAR PAQUETES LAGUNTEST                         #
 #################################################################################
-instalandoPaquetesUbuntuLagunTest(){
+instalandoPaquetesUbuntuLagunTest(){ #se instalan los paquetes necesarios de laguntest
 	sudo apt-get --assume-yes install python3-pip
 	sudo apt-get --assume-yes install dos2unix
 	sudo apt-get --assume-yes install librsvg2-bin
@@ -165,12 +165,12 @@ instalandoPaquetesUbuntuLagunTest(){
 #                       11) CREAR VIRTUALENV                                    #
 #################################################################################
 creandoEntornoVirtualPython3(){
-	sudo pip3 install virtualenv
-	cd /var/www/laguntest/public_html/
+	sudo pip3 install virtualenv #instalamos virtualenv con el instalador de python
+	cd /var/www/laguntest/public_html/ #navegamos hasta la carpeta del virtualhost
 
-	if [ -d ".env" ] ; then echo -e "${GREEN}Virtual enviroment already created${NC}"
+	if [ -d ".env" ] ; then echo -e "${GREEN}Virtual enviroment already created${NC}" #miramos si hay una carpeta .env en cuyo caso el virtualenv estara creado
 	else
-		sudo virtualenv -p python3 .env
+		sudo virtualenv -p python3 .env #si no creamos el entorno virtual
     echo -e "${GREEN}Virtual enviroment created${NC}"
 	fi
 
@@ -183,10 +183,9 @@ instalandoLibreriasPythonLagunTest(){
   grupo=$(id -g) #se guarda en una variable el id del grupo actual
   cd $rutaPrincipal #volvemos a la ruta ORIGINAL
   sudo chown $usuario:$grupo /var/www/laguntest/public_html #Se le da permisos al usuario actual y al grupo actual sobre el directorio
-  ls /var/www/laguntest/public_html/
   source /var/www/laguntest/public_html/.env/bin/activate #se activa el entorno de python
-  sudo cp ./requirements.txt /var/www/laguntest/public_html/.env
-  cd /var/www/laguntest/public_html/.env
+  sudo cp ./requirements.txt /var/www/laguntest/public_html/.env #copiamos los requirements.txt
+  cd /var/www/laguntest/public_html/.env                         #navegamos a la carpeta del entorno virtual
   sudo /var/www/laguntest/public_html/.env/bin/python -m pip install -r requirements.txt	#el comando que habia antes usaba pip3 que llamaba al instalador de paquetes de python e instalaba los paquetes en el ordenador. nosotros solo queremos instalarlos en el virtualenv asi que llamamos al pip del mismo
   echo -e "${GREEN}Python libraries installed${NC}"
   deactivate	#desactivamos el entorno
@@ -201,8 +200,8 @@ instalandoLibreriasPythonLagunTest(){
 instalandoAplicacionLagunTest(){
   cd $rutaPrincipal
   sudo cp -r textos /var/www/laguntest/public_html/ #copiamos la carpeta textos
-  sudo chmod +x webprocess.sh
-  sudo cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/
+  sudo chmod +x webprocess.sh #le damos permiso de ejecucion al webprocess
+  sudo cp  *.sh *.php *.py *.gif /var/www/laguntest/public_html/ #copiamos los archivos necesarios
   echo -e "${GREEN}Aplicacion instalada${NC}"
 
 }
@@ -210,7 +209,7 @@ instalandoAplicacionLagunTest(){
 #                  14) PASO PROPIEDAD                     #
 ###########################################################
 pasoPropiedad(){
-  sudo chown -R www-data:www-data /var/www
+  sudo chown -R www-data:www-data /var/www #le pasamos la propiedad a la carpeta /var/www
   echo -e "${GREEN}Hecho${NC}"
 }
 
@@ -226,6 +225,7 @@ pruebaWebprocess(){
   echo "4º 16)"
 
   sudo su www-data -s /bin/bash
+  #este programa es para hacer pruebas, primero se mete en el usuario www-data y despues tienes que meter los comandos que se han impreso. Asi ejecutaras el webprocess.sh
 
 
 
@@ -234,11 +234,11 @@ pruebaWebprocess(){
 
 
 ###########################################################
-#                  16) VISUALIZAR APLICACION                    #
+#                  16) VISUALIZAR APLICACION              #
 ###########################################################
 visualizandoAplicacion(){
-  sudo cp index.php /var/www/laguntest/public_html
-  firefox http://localhost:8888/index.php
+  sudo cp index.php /var/www/laguntest/public_html #copiamos el index.php que se ha creado al ejecutar webprocess.sh
+  firefox http://localhost:8888/index.php          #lo abrimmos para visualizarlo
   echo -e "${GREEN}Tested${NC}"
 
 }
@@ -253,9 +253,9 @@ viendoLogs(){
 #                  18) CONECTAR SSH                       #
 ###########################################################
 conectarssh(){
-desktop=$( xdg-user-dir DESKTOP)
+desktop=$( xdg-user-dir DESKTOP)                    #esto se usa para saber la ruta del escritorio
   read -p "Introduce <USUARIO>@<IP> " dir           #Se solicita la direccion a la que se va a conectar
-  scp -r $rutaPrincipal $dir:$desktop  >&/dev/null
+  scp -r $rutaPrincipal $dir:$desktop  >&/dev/null  #se copia a traves de SSH la carpeta  en su escritorio
   echo -e "Laguntest Instalado"
 # scp -r ./proyectoSistemas/ lsi@10.227.77.130:Escritorio (esta es la estructura que tiene que tener)
 
