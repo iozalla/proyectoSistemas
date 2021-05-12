@@ -302,11 +302,10 @@ function fin()
 	if [ $respuesta == "N" ]
 		then
 			opcionmenuppal=0
-		fi
-
+	else
     echo -e "${PURPLE}Asier Astorquiza, Iñigo Ozalla, Iker Valcarcel, Endika Eiros"
     exit 0
-
+  fi
 }
 ###########################################################
 #                     21) TODO                            #
