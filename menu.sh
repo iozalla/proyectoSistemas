@@ -270,14 +270,14 @@ mostrarIntentosConexion(){
   zcat /var/log/auth.log.2.gz >> auth.log.txt
   zcat /var/log/auth.log.3.gz >> auth.log.txt
   zcat /var/log/auth.log.4.gz >> auth.log.txt #Se guardan todos los archivos en un mismo fichero
-  less auth.log.txt | tr -s ' ' '@' > conexiones.txt
-  for linea in `less conexiones.txt|grep 'Accepted@password'`
+  less auth.log.txt | tr -s ' ' '@' > conexiones.txt # se cambian todos los espacios por "@"
+  for linea in `less conexiones.txt|grep 'Accepted@password'` #se asigna a las variables las columnas adecuadas
   do
     user=`echo $linea | cut -d@ -f9`
     dia=`echo $linea | cut -d@ -f2`
     mes=`echo $linea | cut -d@ -f1`
     hora=`echo $linea | cut -d@ -f3`
-    echo -e "Status: [accept]   Account name: $user   Date: $mes/$dia/$hora "
+    echo -e "Status: [accept]   Account name: $user   Date: $mes/$dia/$hora " #se imprime los intentos satisfactorios
   done
   for linea in `less conexiones.txt|grep 'Failed@password'`
   do
@@ -398,6 +398,7 @@ function main(){
         *) ;;
 
     	esac
+      
     done
 
 }
